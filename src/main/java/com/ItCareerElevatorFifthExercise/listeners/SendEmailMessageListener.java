@@ -15,7 +15,7 @@ public class SendEmailMessageListener {
     private final MailService mailService;
 
     @KafkaListener(
-        topics = "${app.kafka.topics.mail-send-message:mailSendMessage}",
+            topics = "${app.kafka.topics.mail-send-message:mailSendMessage}",
             groupId = "${spring.kafka.consumer.send-email-message-group-id}",
             containerFactory = "emailMessageKafkaListenerContainerFactory"
     )

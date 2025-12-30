@@ -17,7 +17,7 @@ public class SendRegistrationEmailListener {
     @KafkaListener(
             topics = "${app.kafka.topics.mail-regiser-user:mailRegisterUser}",
             groupId = "${spring.kafka.consumer.send-registration-email-group-id}",
-            containerFactory = "registrationMessageKafkaListenerContainerFactory"
+            containerFactory = "registrationEmailKafkaListenerContainerFactory"
     )
     public void handleEmailRegistrationForward(RegisterUserEmailDTO registerUserEmailDTO) {
         log.info("---> Handling message in the Kafka topic.");

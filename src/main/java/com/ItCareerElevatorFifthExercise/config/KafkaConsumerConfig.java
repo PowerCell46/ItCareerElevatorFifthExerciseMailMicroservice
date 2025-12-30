@@ -27,7 +27,7 @@ public class KafkaConsumerConfig {
     private String sendEmailMessageGroupId;
 
     @Value("${spring.kafka.consumer.send-registration-email-group-id}")
-    private String sendRegistrationEmailMessageGroupId;
+    private String sendRegistrationEmailGroupId;
 
     @Bean
     public ConsumerFactory<String, SendMailMessageDTO> sendMailMessageConsumerFactory() {
@@ -52,7 +52,7 @@ public class KafkaConsumerConfig {
         Map<String, Object> properties = new HashMap<>();
 
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG, sendRegistrationEmailMessageGroupId);
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, sendRegistrationEmailGroupId);
 
         StringDeserializer keyDeserializer = new StringDeserializer();
         var valueDeserializer = new JacksonJsonDeserializer<>(RegisterUserEmailDTO.class);
@@ -73,7 +73,7 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, RegisterUserEmailDTO> registrationMessageKafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<String, RegisterUserEmailDTO> registrationEmailKafkaListenerContainerFactory() {
         var factory = new ConcurrentKafkaListenerContainerFactory<String, RegisterUserEmailDTO>();
         factory.setConsumerFactory(registrationEmailConsumerFactory());
         return factory;
