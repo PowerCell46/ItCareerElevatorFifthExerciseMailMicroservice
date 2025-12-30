@@ -44,7 +44,7 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, SendMailMessageDTO> userLocationKafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<String, SendMailMessageDTO> emailMessageKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, SendMailMessageDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(userLocationConsumerFactory());
         return factory;
