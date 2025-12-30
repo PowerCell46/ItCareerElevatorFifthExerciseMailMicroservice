@@ -16,10 +16,10 @@ public class SendEmailMessageListener {
 
     @KafkaListener(
         topics = "${app.kafka.topics.mail-send-message:mailSendMessage}",
-            groupId = "${spring.kafka.consumer.group-id}",
+            groupId = "${spring.kafka.consumer.send-email-message-group-id}",
             containerFactory = "emailMessageKafkaListenerContainerFactory"
     )
-    public void handleUserLocationMessage(SendMailMessageDTO sendMailMessageDTO) {
+    public void handleEmailMessageForward(SendMailMessageDTO sendMailMessageDTO) {
         log.info("---> Handling message in the Kafka topic.");
 
         if (
