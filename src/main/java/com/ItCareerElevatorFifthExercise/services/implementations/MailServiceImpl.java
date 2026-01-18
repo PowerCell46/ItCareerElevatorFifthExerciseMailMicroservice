@@ -34,7 +34,7 @@ public class MailServiceImpl implements MailService {
 
             helper.setTo(mailMessageDTO.getReceiverEmail());
             helper.setSubject(String.format(
-                    "New message from %s - %s",
+                    "New message from %s - %s.",
                     mailMessageDTO.getSenderUsername(),
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm"))
             ));
@@ -58,7 +58,7 @@ public class MailServiceImpl implements MailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setTo(registerUserEmailDTO.getEmail());
-            helper.setSubject("Welcome to PowerCell's messenger – your account is ready!");
+            helper.setSubject("Welcome to PowerCell46's messenger – your account is ready!");
             helper.setText(formatWelcomeEmailBody(registerUserEmailDTO.getUsername(), registerUserEmailDTO.getEmail()), true);
 
             log.info("---| Sending registration confirmation email to {}.", registerUserEmailDTO.getEmail());
@@ -91,7 +91,7 @@ public class MailServiceImpl implements MailService {
         String messagePreview = messageContent.length() > 100 ? messageContent.substring(0, 100) + "..." : messageContent;
 
         try {
-            // TODO: When deployed change [YOUR_APP_URL] to the actual URL
+            // TODO: When deployed change [YOUR_APP_URL] to the actual URL (so you can forward directly to there)
             final String htmlTemplateContent = Files
                     .readString(Path.of("src/main/resources/templates/offlineUserMessageTemplate.html"));
 
