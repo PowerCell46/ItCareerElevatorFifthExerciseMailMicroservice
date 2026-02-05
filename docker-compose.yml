@@ -17,7 +17,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-#    ports:  # ! We don't need it unless we want to access Kafka from the outside
+#    ports: # ! We don't need it unless we want to access Kafka from the outside
 #      - "9092:9092"
     volumes:
       - mailing_vol_kafka:/var/lib/kafka/data
@@ -38,6 +38,10 @@ services:
     environment:
       # Override application.properties for container networking
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_EMAIL_MESSAGE_GROUP_ID: send-email-message-consumer
+      KAFKA_REGISTER_EMAIL_GROUP_ID: send-registration-email-consumer
+      SPRING_MAIL_EMAIL: makotsevo.fan@gmail.com
+      SPRING_MAIL_PASSWORD: password
     depends_on:
       kafka:
         condition: service_healthy
