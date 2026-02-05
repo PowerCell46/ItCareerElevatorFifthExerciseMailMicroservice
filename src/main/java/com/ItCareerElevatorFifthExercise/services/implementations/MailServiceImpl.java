@@ -8,13 +8,13 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -72,11 +72,13 @@ public class MailServiceImpl implements MailService {
 
     private String formatWelcomeEmailBody(String username, String email) {
         try {
-            final String htmlTemplateContent = Files
-                    .readString(Path.of("src/main/resources/templates/registerUserEmailTemplate.html"));
+            ClassPathResource resource = new ClassPathResource("templates/registerUserEmailTemplate.html");
+            final String htmlTemplateContent = new String(
+                    resource.getInputStream().readAllBytes(),
+                    StandardCharsets.UTF_8
+            );
 
             return htmlTemplateContent
-                    .replace("{{username}}", username)
                     .replace("{{username}}", username)
                     .replace("{{email}}", email);
 
@@ -91,9 +93,11 @@ public class MailServiceImpl implements MailService {
         String messagePreview = messageContent.length() > 100 ? messageContent.substring(0, 100) + "..." : messageContent;
 
         try {
-            // TODO: When deployed change [YOUR_APP_URL] to the actual URL (so you can forward directly to there)
-            final String htmlTemplateContent = Files
-                    .readString(Path.of("src/main/resources/templates/offlineUserMessageTemplate.html"));
+            ClassPathResource resource = new ClassPathResource("templates/offlineUserMessageTemplate.html");
+            final String htmlTemplateContent = new String(
+                    resource.getInputStream().readAllBytes(),
+                    StandardCharsets.UTF_8
+            );
 
             return htmlTemplateContent
                     .replace("{{sender}}", senderUsername)
