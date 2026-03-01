@@ -2,6 +2,7 @@ package com.ItCareerElevatorFifthExercise.services.implementations;
 
 import com.ItCareerElevatorFifthExercise.DTOs.RegisterUserEmailDTO;
 import com.ItCareerElevatorFifthExercise.DTOs.SendMailMessageDTO;
+import com.ItCareerElevatorFifthExercise.exceptions.MailTemplateException;
 import com.ItCareerElevatorFifthExercise.exceptions.MailingProcessException;
 import com.ItCareerElevatorFifthExercise.services.interfaces.MailService;
 import jakarta.mail.MessagingException;
@@ -82,9 +83,9 @@ public class MailServiceImpl implements MailService {
                     .replace("{{username}}", username)
                     .replace("{{email}}", email);
 
-        } catch (IOException e) {
+        } catch (IOException ex) {
             log.warn("Error reading the registerUserEmailTemplate.");
-            throw new RuntimeException(e);
+            throw new MailTemplateException(ex);
         }
     }
 
@@ -105,9 +106,9 @@ public class MailServiceImpl implements MailService {
                     .replace("{{sender}}", senderUsername)
                     .replace("{{date}}", formattedDate);
 
-        } catch (IOException e) {
-            log.warn("Error reading the offlineUserMessageTemplate.");
-            throw new RuntimeException(e);
+        } catch (IOException ex) {
+            log.warn("Error reading the offlineUserMessageTemplate.", ex);
+            throw new MailTemplateException(ex);
         }
     }
 }
